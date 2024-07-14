@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Restaurant_App</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="icon" type="image/x-icon" href="./img/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div id="navbar-placeholder">
+
+    </div>
+    
+    <script>
+    $(function(){
+      $("#navbar-placeholder").load("navbar.php");
+    });
+    </script>
+
+    <section id="menu" class="section-p1">
+        <h2>Menu</h2>
+        <p>Get exquisite seasonal delicacies here!</p>
+        
+        <div class="menu-table">
+            <table id="menu-table-id">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Action</th> <!-- Added for ordering -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Boeuf Bourguignon</td>
+                        <td>Beef stewed in red wine with vegetables and herbs</td>
+                        <td>2000 ₹</td>
+                        <td><button onclick="addToCart('Boeuf Bourguignon', 2000)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Coq au Vin</td>
+                        <td>Chicken slowly cooked in red wine with mushrooms and onions</td>
+                        <td>2100 ₹</td>
+                        <td><button onclick="addToCart('Coq au Vin', 2100)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Ratatouille</td>
+                        <td>Mixture of slowly cooked vegetables with herbs and olive oil</td>
+                        <td>1400 ₹</td>
+                        <td><button onclick="addToCart('Ratatouille', 1400)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Salade Niçoise</td>
+                        <td>Salad composed of tuna, tomatoes, hard-boiled eggs, green beans, and olives</td>
+                        <td>1600 ₹</td>
+                        <td><button onclick="addToCart('Salade Niçoise', 1600)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Quiche Lorraine</td>
+                        <td>Savory tart with bacon, cheese, and cream</td>
+                        <td>1200 ₹</td>
+                        <td><button onclick="addToCart('Quiche Lorraine', 1200)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Escargots de Bourgogne</td>
+                        <td>Snails cooked in garlic butter and parsley</td>
+                        <td>1800 ₹</td>
+                        <td><button onclick="addToCart('Escargots de Bourgogne', 1800)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Crème Brûlée</td>
+                        <td>Dessert made of custard with a caramelized crust</td>
+                        <td>800 ₹</td>
+                        <td><button onclick="addToCart('Crème Brûlée', 800)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>Tarte Tatin</td>
+                        <td>Upside-down apple tart with caramelized crust</td>
+                        <td>1000 ₹</td>
+                        <td><button onclick="addToCart('Tarte Tatin', 1000)">Add to Cart</button></td>
+                    </tr>
+                    <tr>
+                        <td>French Onion Soup</td>
+                        <td>Gratinated soup made from caramelized onions and cheese</td>
+                        <td>600 ₹</td>
+                        <td><button onclick="addToCart('French Onion Soup', 600)">Add to Cart</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </section>
+
+    <section id="footer">
+        <p>&copy; 2024 The Bistro Voltaire. All rights reserved.</p>
+    </section>
+
+    <script>
+        let cart = [];
+
+        function addToCart(itemName, price) {
+            cart.push({ item: itemName, price: price });
+            alert(`${itemName} added to cart!`);
+            localStorage.setItem('cart', JSON.stringify(cart)); // Store cart in localStorage
+        }
+    </script>
+</body>
+</html>

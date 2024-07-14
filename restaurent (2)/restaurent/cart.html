@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Restaurant_App</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <!--#include virtual="navbar.html" -->
+    <div id="navbar-placeholder">
+
+    </div>
+    
+    <script>
+    $(function(){
+      $("#navbar-placeholder").load("navbar.php");
+    });
+    </script>
+    <div class="container">
+        <section id="cart" class="section-p1">
+            <h2>Cart</h2>
+            <div id="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div id="cart-total">
+                <h3>Total:</h3>
+                <p id="total-amount"></p>
+                <button onclick="checkout()">Delete</button>
+                <button onclick="placeOrder()">Place Order</button>
+                <button onclick="updateStatus()">Update</button>
+            </div>
+        </section>
+    </div>
+
+    
+
+    <script>
+        // Retrieve cart items from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+        // Display cart items and calculate total
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalAmount = document.getElementById('total-amount');
+    
+        let totalPrice = 0;
+        cart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <p>${item.item}</p>
+                <p>${item.price} ₹</p>
+            `;
+            cartItemsContainer.appendChild(cartItem);
+    
+            totalPrice += item.price;
+        });
+    
+        totalAmount.textContent = `${totalPrice} ₹`;
+    
+        // Checkout function (can be customized as needed)
+        function checkout() {
+            if (cart.length === 0) {
+                alert('No items left in the cart!');
+            } else {
+                // Add your checkout logic here
+                let cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart))
+                alert('Items Deleted!');
+                window.location.href = 'menu.html';
+                // Redirect to checkout page or perform other actions
+            }
+        }
+
+        // Function to place an order
+        function placeOrder() {
+            // AJAX request to send order details to the server
+            $.ajax({
+                type: 'POST',
+                url: 'place_order.php', // Adjust the URL to your server endpoint
+                data: { cart: cart }, // Send the cart items as data
+                success: function(response) {
+                    alert(response); // Alert the response from the server
+                    // Clear cart items from localStorage
+                    localStorage.removeItem('cart');
+                    
+                    // Remove displayed cart items from the DOM
+                    cartItemsContainer.innerHTML = '';
+                    totalAmount.textContent = '0 ₹';
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function updateStatus() {
+            $.ajax({
+                type: 'POST',
+                url: 'update_status.php', // Adjust the URL to your server endpoint
+                data: { cart: cart }, // Send the cart items as data
+                success: function(response) {
+                    alert(response); // Alert the response from the server
+                    // Clear cart items from localStorage
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            })
+            // alert('Items updated!');
+        }
+    </script>
+    
+    
+</body>
+</html>
